@@ -1,3 +1,8 @@
 #!/usr/bin/python
-print "Hey Travis, how's it cooking?"
-exit()
+
+
+
+def printMsg():
+  return "Hey Travis"
+
+printMsg()
