@@ -8,7 +8,7 @@ before_install:
 install:  
   - "pip install -r requirements.txt"
 script:
-  - "./nose2 -v"
+  - "nose2 -v"
 notifications:
   email: 
     - livysdad27@gmail.com
