@@ -12,3 +12,5 @@ script:
 notifications:
   email: 
     - livysdad27@gmail.com
+after_success:
+  - coveralls
