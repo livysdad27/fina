@@ -1,2 +1,4 @@
 PyInstaller==3.0
+coverage
 nose2
+cov-core
