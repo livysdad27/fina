@@ -7,6 +7,7 @@ class testImport(unittest.TestCase):
   '''Tests for importing a CSV file'''
 
   def setUp(self):
+    finaImport.importCSV("buttface")
     toeFile = open(os.path.join("data", "toe"), "w+")
  
   def tearDown(self):
