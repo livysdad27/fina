@@ -12,6 +12,10 @@ class testImport(unittest.TestCase):
   def tearDown(self):
     os.remove(os.path.join("data", "toe"))
 
+  def testDataDirExists(self):
+    '''Test that the data directory exists'''
+    self.assertTrue(os.path.exists("data"))
+
   def testImportCSV(self):
     ''' Test a good file '''
     self.assertIsInstance(finaImport.importCSV("toe") , file)

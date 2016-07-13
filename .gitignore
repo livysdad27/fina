@@ -7,8 +7,8 @@ __pycache__/
 *.so
 
 # Data Files
-data/*.CSV
-data/*.csv
+data/*
+data/*
 
 # Examples
 examples/*
