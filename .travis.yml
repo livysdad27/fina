@@ -14,3 +14,5 @@ notifications:
     - livysdad27@gmail.com
 after_success:
   - coveralls
+after_failure:
+  - coveralls
