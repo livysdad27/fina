@@ -3,3 +3,4 @@ coverage
 nose2
 cov-core
 python-coveralls
+pandas

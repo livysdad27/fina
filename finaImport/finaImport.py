@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os, csv
+import os, pandas 
 
 def importCSV(fileName):
   '''importCSV brings in the CSV transaction file to be analyzed'''
@@ -10,6 +10,8 @@ def importCSV(fileName):
     return "Couldn't create data directory!"
   try:
     fileFullName = os.path.join("data", fileName)
-    return csv.reader(file(fileFullName))
+    return pandas.read_csv(fileFullName)
   except(IOError):
     return "File not found!"
+  except:
+    return "Bad csv file!"
