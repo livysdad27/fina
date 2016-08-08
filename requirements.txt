@@ -1,4 +1,5 @@
 PyInstaller==3.0
+cherrypy
 coverage
 nose2
 cov-core

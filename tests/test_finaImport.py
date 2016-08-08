@@ -6,7 +6,6 @@ class testImport(unittest.TestCase):
   '''Tests for importing a CSV file'''
 
   def setUp(self):
-    finaImport.importCSV("testopesto")
     toeFile = open(os.path.join("data", "toe"), "w+")
     toeFile.write('hi, bye')
     toeFile.write('1,2')
