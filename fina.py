@@ -14,6 +14,7 @@ class fina(object):
 
   def PUT(self, csvFile):
     pGrid = fi.importCSV(csvFile) 
+    print pGrid
     return pGrid
 
   def DELETE(self, thing):
