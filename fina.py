@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import cherrypy
+from finaLib import finaImport as fi 
 
 class fina(object):
   exposed = True
@@ -11,8 +12,9 @@ class fina(object):
   def POST(self, thing):
     return "this is a post"
 
-  def PUT(self, thing):
-    return "this is a put" 
+  def PUT(self, csvFile):
+    pGrid = fi.importCSV(csvFile) 
+    return pGrid
 
   def DELETE(self, thing):
     return "this is a delete" 

@@ -8,7 +8,6 @@ __pycache__/
 
 # Data Files
 data/*
-data/*
 
 # Examples
 examples/*
