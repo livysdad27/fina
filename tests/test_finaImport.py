@@ -1,21 +1,19 @@
 #!/usr/bin/python
 from finaLib import finaImport 
-import unittest, os, pandas
+import unittest, os, pandas, shutil
 
 class testImport(unittest.TestCase):
   '''Tests for importing a CSV file'''
 
   def setUp(self):
-    toeFile = open(os.path.join("data", "toe"), "w+")
-    toeFile.write('hi, bye')
-    toeFile.write('1,2')
-    toeFile.write('3,4')
-
-    emptyFile = open(os.path.join("data", "empty"), "w+")
+    shutil.copy("tests/assets/test.OFX", "data")
+    
+    toeFile = open(os.path.join("data", "test.OFX"))
+    emptyFile = open(os.path.join("data", "emptyofx"), "w+")
  
   def tearDown(self):
-    os.remove(os.path.join("data", "toe"))
-    os.remove(os.path.join("data", "empty"))
+    os.remove(os.path.join("data", "test.OFX"))
+    os.remove(os.path.join("data", "emptyofx"))
 
   def testDataDirExists(self):
     '''Test that the data directory exists'''
@@ -23,7 +21,7 @@ class testImport(unittest.TestCase):
 
   def testImportCSV(self):
     ''' Test a good file and make sure importCSV returns a csv reader object '''
-    self.assertIsInstance(finaImport.importOFX("toe"), pandas.core.frame.DataFrame)
+    self.assertIsInstance(finaImport.importOFX("test.OFX"), pandas.core.frame.DataFrame)
 
   def testImportBadFile(self):
     ''' Test a non-existant file '''
@@ -31,4 +29,4 @@ class testImport(unittest.TestCase):
 
   def testImportEmptyFile(self):
     '''Test an empty file import'''
-    self.assertEquals(finaImport.importOFX("empty"), "Bad csv file!")
+    self.assertEquals(finaImport.importOFX("empty"), "Bad ofx file!")

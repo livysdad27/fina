@@ -19,5 +19,5 @@ def importOFX(fileName):
     return pandas.DataFrame(transList)
   except(IOError):
     return "File not found!"
-#  except:
-#    return "Bad ofx file!"
+  except:
+    return "Bad ofx file!"
