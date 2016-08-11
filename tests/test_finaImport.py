@@ -23,12 +23,12 @@ class testImport(unittest.TestCase):
 
   def testImportCSV(self):
     ''' Test a good file and make sure importCSV returns a csv reader object '''
-    self.assertIsInstance(finaImport.importCSV("toe"), pandas.core.frame.DataFrame)
+    self.assertIsInstance(finaImport.importOFX("toe"), pandas.core.frame.DataFrame)
 
   def testImportBadFile(self):
     ''' Test a non-existant file '''
-    self.assertEquals(finaImport.importCSV("testopesto"), "File not found!")
+    self.assertEquals(finaImport.importOFX("testopesto"), "File not found!")
 
   def testImportEmptyFile(self):
     '''Test an empty file import'''
-    self.assertEquals(finaImport.importCSV("empty"), "Bad csv file!")
+    self.assertEquals(finaImport.importOFX("empty"), "Bad csv file!")
