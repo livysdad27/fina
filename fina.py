@@ -12,8 +12,8 @@ class fina(object):
   def POST(self, thing):
     return "this is a post"
 
-  def PUT(self, csvFile):
-    pGrid = fi.importCSV(csvFile) 
+  def PUT(self, ofxFile):
+    pGrid = fi.importOFX(ofxFile) 
     print pGrid
     return pGrid
 
