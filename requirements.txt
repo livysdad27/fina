@@ -1,4 +1,6 @@
 PyInstaller==3.0
+BeautifulSoup
+six
 cherrypy
 coverage
 nose2
