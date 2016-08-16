@@ -20,7 +20,7 @@ class testImport(unittest.TestCase):
     self.assertTrue(os.path.exists("data"))
 
   def testImportCSV(self):
-    ''' Test a good file and make sure importCSV returns a csv reader object '''
+    ''' Test a good file and make sure importOFX returns a pandas DataFrame object '''
     self.assertIsInstance(finaImport.importOFX("test.OFX"), pandas.core.frame.DataFrame)
 
   def testImportBadFile(self):

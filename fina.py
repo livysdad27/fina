@@ -7,6 +7,7 @@ class fina(object):
 
   @cherrypy.tools.accept(media='text/plain')
   def GET(self, thing):
+    print self
     return "this is a get" 
 
   def POST(self, thing):
@@ -21,6 +22,7 @@ class fina(object):
     return "this is a delete" 
 
 cherrypy.config.update("fina.cfg")
-cherrypy.tree.mount(fina(), "/", "fina.cfg")
-cherrypy.engine.start()
-cherrypy.engine.block()
+if __name__ == '__main__':
+  cherrypy.tree.mount(fina(), "/", "fina.cfg")
+  cherrypy.engine.start()
+  cherrypy.engine.block()
