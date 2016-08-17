@@ -1,22 +1,22 @@
 #!/usr/bin/python
 import cherrypy
 from finaLib import finaImport as fi 
+from finaLib import finaDisp as fd
 
 class fina(object):
   exposed = True
 
   @cherrypy.tools.accept(media='text/plain')
-  def GET(self, thing):
-    print self
-    return "this is a get" 
+  def GET(self, ofxFile="master.pkl"):
+    dFrame, dFrameHTML = fd.dispOFX(ofxFile) 
+    return dFrameHTML
 
   def POST(self, thing):
     return "this is a post"
 
   def PUT(self, ofxFile):
-    pGrid = fi.importOFX(ofxFile) 
-    print pGrid
-    return pGrid
+    dFrame = fi.importOFX(ofxFile) 
+    fi.pickleDataFrame(dFrame)
 
   def DELETE(self, thing):
     return "this is a delete" 

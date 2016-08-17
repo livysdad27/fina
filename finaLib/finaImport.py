@@ -21,3 +21,13 @@ def importOFX(fileName):
     return "File not found!"
   except:
     return "Bad ofx file!"
+
+def pickleDataFrame(ofxDataFrame):
+  '''Write out a the master pickled dataframe.'''
+  try:
+    if not(os.path.exists("data")):
+      os.makedirs("data")
+  except(IOError):
+    return "Couldn't create data directory!"
+  pickleFullName = os.path.join("data", "master.pkl") 
+  ofxDataFrame.to_pickle(pickleFullName)
