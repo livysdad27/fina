@@ -15,7 +15,7 @@ teardown_module = tearDownModule
 
 class TestCherryPyApp(ctc.BaseCherryPyTestCase):
     def test_get(self):
-        response = self.request('/?thing=doh')
+        response = self.request('/')
         self.assertEqual(response.output_status, '200 OK')
         # response body is wrapped into a list internally by CherryPy
         #self.assertEqual(response.body, ['this is a get request'])
