@@ -16,17 +16,17 @@ class testImport(unittest.TestCase):
     os.remove(os.path.join("data", "emptyofx"))
 
   def testDataDirExists(self):
-    '''Test that the data directory exists'''
+    '''******Test that the data directory exists'''
     self.assertTrue(os.path.exists("data"))
 
   def testImportCSV(self):
-    ''' Test a good file and make sure importOFX returns a pandas DataFrame object '''
+    '''******Test a good file and make sure importOFX returns a pandas DataFrame object '''
     self.assertIsInstance(finaImport.importOFX("test.OFX"), pandas.core.frame.DataFrame)
 
   def testImportBadFile(self):
-    ''' Test a non-existant file '''
+    '''******Test a non-existant file '''
     self.assertEquals(finaImport.importOFX("testopesto"), "File not found!")
 
   def testImportEmptyFile(self):
-    '''Test an empty file import'''
+    '''******Test an empty file import'''
     self.assertEquals(finaImport.importOFX("empty"), "Bad ofx file!")

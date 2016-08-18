@@ -1,23 +1,23 @@
-# -*- coding: utf-8 -*-
-import cherrypy, unittest
+import cherrypy, unittest, os, shutil
 
+from finaLib import finaDisp as fd
 from fina import fina
-from finaLib import cptestcase as ctc 
+from . import cptestcase as ctc 
 
 def setUpModule():
-    cherrypy.tree.mount(fina(), '/', "fina.cfg")
-    cherrypy.engine.start()
+  shutil.copy("tests/assets/test.pkl", "data") 
+  cherrypy.tree.mount(fina(), '/', "fina.cfg")
+  cherrypy.engine.start()
 setup_module = setUpModule
 
 def tearDownModule():
-    cherrypy.engine.exit()
+  os.remove(os.path.join("data", "test.pkl"))
+  cherrypy.engine.exit()
 teardown_module = tearDownModule
 
 class TestCherryPyApp(ctc.BaseCherryPyTestCase):
-    def test_get(self):
-        response = self.request('/')
-        self.assertEqual(response.output_status, '200 OK')
-        # response body is wrapped into a list internally by CherryPy
-        #self.assertEqual(response.body, ['this is a get request'])
-
-
+  '''Test class for the main cherry.py dispatcher.'''
+  def test_get(self):
+    '''******Test a get request using a test pkl file'''            
+    response = self.request('/', ofxFile="test.pkl")
+    self.assertEqual(response.output_status, '200 OK')
