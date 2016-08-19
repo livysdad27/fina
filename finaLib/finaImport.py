@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import os, pandas
-from ofxparse import OfxParser as ofp
+#import ofxparse 
+from ofxparse import OfxParser as ofp 
+from ofxparse.ofxparse import OfxParserException as ofpe
 
 def importOFX(fileName):
   '''importOFX brings in the OFX transaction objects to be analyzed'''
@@ -14,13 +16,15 @@ def importOFX(fileName):
     fileFullName = os.path.join("data", fileName)
     ofx = ofp.parse(open(fileFullName))
     for t in ofx.account.statement.transactions:
-      transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type})
+      transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
     return pandas.DataFrame(transList)
-  except(IOError):
+  except IOError:
     return "File not found!"
-  except:
-    return "Bad ofx file!"
+  except ofpe:
+    return "Likely an empty file but an OfxParserException was raised!" 
+  except ValueError:
+    return "Bad OFX File or other ValueError"
 
 def pickleDataFrame(ofxDataFrame):
   '''Write out a the master pickled dataframe.'''
