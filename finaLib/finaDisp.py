@@ -17,3 +17,17 @@ def dispOFX(fileName="master.pkl"):
     return "File not found!"
   except:
     return "Bad pkl file!"
+
+def dispDFrameByDate(startDate, endDate, dFrame): 
+  '''dispDFrameByDate slices a date range out of a dataframe'''
+  sDate = pandas.to_datetime(startDate)
+  eDate = pandas.to_datetime(endDate)
+  sliceDFrame = dFrame.loc[(dFrame['date'] > sDate) & (dFrame['date'] < eDate)]
+  sliceDFrameHTML = sliceDFrame.to_html()
+  return sliceDFrame, sliceDFrameHTML
+
+def dispDFrameByMonth(yearNum, monthNum, dFrame):
+  '''dispDFrameByMonth slices a month of transactions out of the dataframe'''
+  sliceDFrame = dFrame.loc[(dFrame['date'].month == monthNum) & (dFrame['date'].year == yearNum)]
+  sliceDFrameHTML = sliceDFrame.to_html()
+  return sliceDFrame, sliceDFrameHTML
