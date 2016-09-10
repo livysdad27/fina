@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import cherrypy, finaLib
-#This is a comment for Jim
 
 class fina(object):
   exposed = True
