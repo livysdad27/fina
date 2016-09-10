@@ -1,35 +1,35 @@
 #!/usr/bin/python
-import cherrypy
-from finaLib import finaImport as fi 
-from finaLib import finaDisp as fd
-from finaLib import finaUpdate as fu
+import cherrypy, finaLib
+#This is a comment for Jim
 
 class fina(object):
   exposed = True
 
   @cherrypy.tools.accept(media='text/plain')
-  def GET(self, ofxFile="master.pkl", startDate=None, endDate=None):
-    dFrame, dFrameHTML = fd.dispOFX(ofxFile) 
-    HTML = dFrameHTML
-    if startDate != None:
-      sDFrame, sDFrameHTML = fd.dispDFrameByDate(startDate, endDate, dFrame)
-      HTML = sDFrameHTML
-    return HTML
+  def GET(self, tid=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
+    if tid == None:
+      return "Display the whole trans file"
+    else:
+      return "Get the trans with id = " + tid
 
-  def POST(self, payeeName=None, catName=None):
-    if ((payeeName != None) & (catName != None)):
-      fu.updateCat(payeeName, catName)
-      return "update complete for " + payeeName +  " to category " + catName
+  def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
+    if tid == None:
+      return "Update categories for a set of transactions"
+    else:
+      return "Update category for a single transition with tid = " + tid
 
-  def PUT(self, ofxFile):
-    dFrame = fi.importOFX(ofxFile) 
-    fi.pickleDataFrame(dFrame)
+  def PUT(self, tFile=None):
+    finaLib.finaImport.pickleDataFrame(finaLib.finaImport.importOFX(tFile))
+    return "Imported a transaction file"
 
-  def DELETE(self, thing):
-    return "this is a delete" 
-
+  def DELETE(self, tid=None):
+    if tid == None:
+      return "Delete a whole trans file"
+    else:
+      return "Delte a single transaction with id=" + tid
+    
 cherrypy.config.update("fina.cfg")
 if __name__ == '__main__':
-  cherrypy.tree.mount(fina(), "/", "fina.cfg")
+  cherrypy.tree.mount(fina(), "/api/transactions", "fina.cfg")
   cherrypy.engine.start()
   cherrypy.engine.block()

@@ -12,13 +12,13 @@ def importOFX(fileName):
   except(IOError):
     return "Couldn't create data directory!"
   try:
-    transList = []
+    transList = [] 
     fileFullName = os.path.join("data", fileName)
     ofx = ofp.parse(open(fileFullName))
     for t in ofx.account.statement.transactions:
       transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
-    return pandas.DataFrame(transList)
+    return pandas.DataFrame.from_records(transList, index='id')
   except IOError:
     return "File not found!"
   except ofpe:
