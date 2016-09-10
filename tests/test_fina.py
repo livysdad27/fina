@@ -19,5 +19,5 @@ class TestCherryPyApp(ctc.BaseCherryPyTestCase):
   '''Test class for the main cherry.py dispatcher.'''
   def test_get(self):
     '''******Test a get request using a test pkl file'''            
-    response = self.request('/', ofxFile="test.pkl")
+    response = self.request('/')
     self.assertEqual(response.output_status, '200 OK')
