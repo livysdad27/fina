@@ -12,7 +12,7 @@ class fina(object):
       return dFrameHTML
     elif (startDate != None) & (endDate != None):
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData()) 
-      slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExport.unPickleData())
+      slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExp.unPickleData())
       return slicedDFrameHTML
     else:
       return "Get the trans with id = " + tid
