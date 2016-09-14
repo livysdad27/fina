@@ -1,15 +1,22 @@
 #!/usr/bin/python
-import cherrypy, finaLib
+import cherrypy
+import finaLib as fl
 
 class fina(object):
   exposed = True
 
   @cherrypy.tools.accept(media='text/plain')
-  def GET(self, tid=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
-    if tid == None:
-      return "Display the whole trans file"
+  def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
+    if tid == None and startDate ==None:
+      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExport.unPickleData())
+      return dFrameHTML
+    elif (startDate != None) & (endDate != None):
+      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExport.unPickleData()) 
+      slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExport.unPickleData())
+      return slicedDFrameHTML
     else:
       return "Get the trans with id = " + tid
+    
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
     if tid == None:
@@ -29,6 +36,6 @@ class fina(object):
     
 cherrypy.config.update("fina.cfg")
 if __name__ == '__main__':
-  cherrypy.tree.mount(fina(), "/api/transactions", "fina.cfg")
+  cherrypy.tree.mount(fina(), "/api/trans", "fina.cfg")
   cherrypy.engine.start()
   cherrypy.engine.block()
