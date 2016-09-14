@@ -1,4 +1,4 @@
-from finaLib import finaUpdate
-from finaLib import finaImport
+from finaLib import finaUpdt
+from finaLib import finaImp
 from finaLib import finaDisp
-from finaLib import finaExport
+from finaLib import finaExp
