@@ -8,10 +8,10 @@ class fina(object):
   @cherrypy.tools.accept(media='text/plain')
   def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
     if tid == None and startDate ==None:
-      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExport.unPickleData())
+      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
       return dFrameHTML
     elif (startDate != None) & (endDate != None):
-      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExport.unPickleData()) 
+      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData()) 
       slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExport.unPickleData())
       return slicedDFrameHTML
     else:
@@ -25,7 +25,7 @@ class fina(object):
       return "Update category for a single transition with tid = " + tid
 
   def PUT(self, tFile=None):
-    finaLib.finaImport.pickleDataFrame(finaLib.finaImport.importOFX(tFile))
+    finaLib.finaImp.pickleDataFrame(finaLib.finaImp.importOFX(tFile))
     return "Imported a transaction file"
 
   def DELETE(self, tid=None):
