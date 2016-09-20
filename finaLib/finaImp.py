@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os, pandas
+import urllib
 #import ofxparse 
 from ofxparse import OfxParser as ofp 
 from ofxparse.ofxparse import OfxParserException as ofpe
@@ -16,7 +17,8 @@ def importOFX(fileName):
     fileFullName = os.path.join("data", fileName)
     ofx = ofp.parse(open(fileFullName))
     for t in ofx.account.statement.transactions:
-      transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
+      tidLink = '<a href=http://localhost/api/trans/' + t.id.replace(" ", "%20").replace("#", "%23")  + '>' + t.id + '</a>'
+      transList.append({'id':t.id, 'link':tidLink, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
     return pandas.DataFrame.from_records(transList, index='id')
   except IOError:

@@ -1,10 +1,12 @@
 #!/usr/bin/python
 import os, pandas
 
+pandas.set_option('display.max_colwidth', -1)
+
 def dispOFX(dFrame):
   '''importOFX brings in the OFX transaction objects to be analyzed'''
   try:
-    dFrameHTML = dFrame.to_html()
+    dFrameHTML = dFrame.to_html(escape=False)
     return dFrame, dFrameHTML
   except(IOError):
     return "File not found!"

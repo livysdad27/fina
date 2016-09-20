@@ -4,8 +4,8 @@ import finaLib as fl
 
 class fina(object):
   exposed = True
-
   @cherrypy.tools.accept(media='text/plain')
+  
   def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
     if tid == None and startDate ==None:
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
@@ -20,12 +20,13 @@ class fina(object):
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
     if tid == None:
-      return "Update categories for a set of transactions"
+      fl.finaUpdt.updateCat(payee, cat, fl.finaExp.unPickleData())  
+      return "Category " + cat + " set for payee " + payee
     else:
       return "Update category for a single transition with tid = " + tid
 
   def PUT(self, tFile=None):
-    finaLib.finaImp.pickleDataFrame(finaLib.finaImp.importOFX(tFile))
+    fl.finaImp.pickleDataFrame(fl.finaImp.importOFX(tFile))
     return "Imported a transaction file"
 
   def DELETE(self, tid=None):
