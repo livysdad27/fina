@@ -34,9 +34,12 @@ class fina(object):
       return "Delete a whole trans file"
     else:
       return "Delte a single transaction with id=" + tid
-    
-cherrypy.config.update("fina.cfg")
+
+class home(object):
+  pass
+cherrypy.config.update("global.cfg")
 if __name__ == '__main__':
   cherrypy.tree.mount(fina(), "/api/trans", "fina.cfg")
+  cherrypy.tree.mount(home(), "/", "home.cfg")
   cherrypy.engine.start()
   cherrypy.engine.block()
