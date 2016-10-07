@@ -1,1 +1,36 @@
-<h1>DOH</H1>
+<html>
+<head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  var now = new Date();
+  var nowStr = now.getFullYear() + '-' 
+             + ('00' + (now.getMonth() + 1)).slice(-2) + '-' 
+             + ('00' + now.getDate()).slice(-2) + 'T' 
+             + ('00' + now.getHours()).slice(-2) + ':'
+             + ('00' + now.getMinutes()).slice(-2); 
+  $('input[name=startDate]').val("2016-01-01T00:00:00");
+  $('input[name=endDate]').val(nowStr);
+  $('button[name=queryButton]').click(function() {
+    $.ajax({
+      'url' : 'api/trans',
+      'type'  :  'GET',
+      'data' :  {
+                  startDate:  $('input[name=startDate]').val(),
+                  endDate:  $('input[name=endDate]').val()
+                 },
+      'success' : function(data){
+          $('.transarea').html(data);
+      }  
+    });
+  });
+});
+</script>
+</head>
+<body>
+  Start Date:<input type='datetime-local' name='startDate'><br>
+  End Date:<input type='datetime-local' name='endDate'><br>
+  <button name="queryButton" value="toejamblamb">Get Transactions</button>
+  <div class="transarea"></div>
+</body>
+</html>
