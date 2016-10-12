@@ -15,8 +15,18 @@ def dispDFrameByDate(startDate, endDate, dFrame):
   '''dispDFrameByDate slices a date range out of a dataframe'''
   sDate = pandas.to_datetime(startDate)
   eDate = pandas.to_datetime(endDate)
-  sliceDFrame = dFrame.loc[(dFrame['date'] > sDate) & (dFrame['date'] < eDate)]
-  sliceDFrameHTML = sliceDFrame.to_html()
+  if (pandas.isnull(sDate) or pandas.isnull(eDate)):
+    dFrameHTML = dFrame.to_html(escape=False)
+    return dFrame, dFrameHTML  
+  else:
+    sliceDFrame = dFrame.loc[(dFrame['date'] > sDate) & (dFrame['date'] < eDate)]
+    sliceDFrameHTML = sliceDFrame.to_html(escape=False)
+    return sliceDFrame, sliceDFrameHTML
+
+def dispDFrameByCat(cat, dFrame):
+  '''Display the items with a given category'''
+  sliceDFrame = dFrame.loc[dFrame['cat'] == cat]
+  sliceDFrameHTML = sliceDFrame.to_html(escape=False, columns=('payee', 'amount', 'date'))
   return sliceDFrame, sliceDFrameHTML
 
 def dispDFrameByMonth(yearNum, monthNum, dFrame):

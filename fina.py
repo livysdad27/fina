@@ -7,16 +7,17 @@ class fina(object):
   @cherrypy.tools.accept(media='text/plain')
   
   def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
-    if tid == None and startDate ==None:
+    if tid == None and startDate ==None and cat == None:
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
       return dFrameHTML
     elif (startDate != None) & (endDate != None):
-      dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData()) 
       slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExp.unPickleData())
       return slicedDFrameHTML
+    elif cat != None:
+      dFrame, dFrameHTML = fl.finaDisp.dispDFrameByCat(cat, fl.finaExp.unPickleData())
+      return dFrameHTML
     else:
       return "Get the trans with id = " + tid
-    
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
     if tid == None:
