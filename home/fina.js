@@ -42,23 +42,26 @@ $(document).ready(function(){
     });
   });
 
-  $('button[name=updateCat]').click(function() {
-    $.ajax({
-      'url' : 'api/trans',
-      'type' : 'POST',
-      'data' : {
-                 cat:  $('input[name=newCat]').val(),
-                 payee: tableCellGet('.payeeTable', 2, 1)
-               },
-      'success' : function(data){
-        $.ajax({
-          'url' : 'api/trans',
-          'type' : 'GET',
-          'data' : { cat: ''},
-          'success' : function(data){
-            $('.catArea').html(data);}
-        });
-      }
-    });
+  $('input[name=newCat]').keypress(function(e) {
+    if(e.which == 13){
+      $.ajax({
+        'url' : 'api/trans',
+        'type' : 'POST',
+        'data' : {
+                   cat:  $('input[name=newCat]').val(),
+                   payee: tableCellGet('.payeeTable', 2, 1)
+                 },
+        'success' : function(data){
+          $.ajax({
+            'url' : 'api/trans',
+            'type' : 'GET',
+            'data' : { cat: ''},
+            'success' : function(data){
+              $('.catArea').html(data);}
+          });
+        }
+      });
+      $('input[name=newCat]').val('');
+    }
   });
 });
