@@ -17,10 +17,12 @@ def importOFX(fileName):
     fileFullName = os.path.join("data", fileName)
     ofx = ofp.parse(open(fileFullName))
     for t in ofx.account.statement.transactions:
-      tidLink = '<a href=http://localhost/api/trans/' + t.id.replace(" ", "%20").replace("#", "%23")  + '>' + t.id + '</a>'
+      tidLink = '<a href=/api/trans/' + t.id.replace(" ", "%20").replace("#", "%23")  + '>' + t.id + '</a>'
       transList.append({'id':t.id, 'link':tidLink, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
-    return pandas.DataFrame.from_records(transList, index='id')
+    df = pandas.DataFrame.from_records(transList, index='id')
+    df.amount = df.amount.astype(float)
+    return df
   except IOError:
     return "File not found!"
   except ofpe:

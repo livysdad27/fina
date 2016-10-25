@@ -1,13 +1,14 @@
 #!/usr/bin/python
 import cherrypy
 import finaLib as fl
+from cStringIO import StringIO as sio
 
 class fina(object):
   exposed = True
   @cherrypy.tools.accept(media='text/plain')
   
   def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
-    if tid == None and startDate ==None and cat == None:
+    if tid == None and startDate ==None and cat == None and graph ==  None:
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
       return dFrameHTML
     elif (startDate != None) & (endDate != None):
@@ -16,6 +17,12 @@ class fina(object):
     elif cat != None:
       dFrame, dFrameHTML = fl.finaDisp.dispDFrameByCat(cat, fl.finaExp.unPickleData())
       return dFrameHTML
+    elif graph != None:
+      buf = sio()
+      buf = fl.finaDisp.dispPareto(fl.finaExp.unPickleData())
+      buf.seek(0)
+      cherrypy.response.headers['Content-Type'] = "image/png"
+      return cherrypy.lib.file_generator(buf)
     else:
       return "Get the trans with id = " + tid
 

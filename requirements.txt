@@ -8,3 +8,4 @@ cov-core
 python-coveralls
 pandas
 ofxparse
+matplotlib

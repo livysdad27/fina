@@ -6,6 +6,7 @@ virtualenf:
 before_install:  
   - "sudo apt-get update"
   - "sudo apt-get install python-dev"
+  - "sudo apt-get install python-tk"
 install:  
   - "pip install -r requirements.txt"
 script:

@@ -1,6 +1,9 @@
 #!/usr/bin/python
 import os, pandas
+from cStringIO import StringIO as sio
+import matplotlib
 
+matplotlib.use('Agg')
 pandas.set_option('display.max_colwidth', -1)
 
 def dispOFX(dFrame):
@@ -16,21 +19,30 @@ def dispDFrameByDate(startDate, endDate, dFrame):
   sDate = pandas.to_datetime(startDate)
   eDate = pandas.to_datetime(endDate)
   if (pandas.isnull(sDate) or pandas.isnull(eDate)):
-    dFrameHTML = dFrame.to_html(escape=False)
+    dFrameHTML = dFrame.to_html(escape=False, classes="table-condensed")
     return dFrame, dFrameHTML  
   else:
     sliceDFrame = dFrame.loc[(dFrame['date'] > sDate) & (dFrame['date'] < eDate)]
-    sliceDFrameHTML = sliceDFrame.to_html(escape=False)
+    sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes="table")
     return sliceDFrame, sliceDFrameHTML
 
 def dispDFrameByCat(cat, dFrame):
   '''Display the items with a given category'''
   sliceDFrame = dFrame.loc[dFrame['cat'] == cat]
-  sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable', columns=('payee', 'amount', 'date'))
+  sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable table-condensed', columns=('payee', 'amount', 'date'))
   return sliceDFrame, sliceDFrameHTML
 
 def dispDFrameByMonth(yearNum, monthNum, dFrame):
   '''dispDFrameByMonth slices a month of transactions out of the dataframe'''
   sliceDFrame = dFrame.loc[(dFrame['date'].month == monthNum) & (dFrame['date'].year == yearNum)]
-  sliceDFrameHTML = sliceDFrame.to_html()
+  sliceDFrameHTML = sliceDFrame.to_html(classes="table-condensed")
   return sliceDFrame, sliceDFrameHTML
+
+def dispPareto(dFrame):
+  dFrame.amount = dFrame.amount.astype('float')
+  dFrame = dFrame.groupby('cat').sum().sort_values('amount')
+  plot = dFrame.plot.bar()
+  fig = plot.get_figure()
+  buf = sio()
+  fig.savefig(buf, format='png')
+  return buf 
