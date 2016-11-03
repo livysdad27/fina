@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os, pandas
 import urllib
+from cStringIO import StringIO as sio
 #import ofxparse 
 from ofxparse import OfxParser as ofp 
 from ofxparse.ofxparse import OfxParserException as ofpe
@@ -14,8 +15,11 @@ def importOFX(fileName):
     return "Couldn't create data directory!"
   try:
     transList = [] 
-    fileFullName = os.path.join("data", fileName)
-    ofx = ofp.parse(open(fileFullName))
+#    fileFullName = os.path.join("data", fileName)
+#    buf = sio()
+#    buf.write(fileName.file.read())
+#    buf.seek(0) 
+    ofx = ofp.parse(fileName.file)
     for t in ofx.account.statement.transactions:
       tidLink = '<a href=/api/trans/' + t.id.replace(" ", "%20").replace("#", "%23")  + '>' + t.id + '</a>'
       transList.append({'id':t.id, 'link':tidLink, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})

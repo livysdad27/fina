@@ -19,6 +19,15 @@ $(document).ready(function(){
              + ('00' + now.getMinutes()).slice(-2); 
 //  $('input[name=startDate]').val("2016-01-01T00:00:00");
 //  $('input[name=endDate]').val(nowStr);
+  Dropzone.options.ofxFileDropzone = {
+    paramName:  "tFile",
+    maxFilesize:  2,
+    method:  "put",
+    accept:  function(file, done) {
+               done();
+             }
+  };
+
   $.ajax({
     'url' : 'api/trans',
     'type' : 'GET',

@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import cherrypy
 import finaLib as fl
-from cStringIO import StringIO as sio
 
 class fina(object):
   exposed = True
@@ -11,18 +10,21 @@ class fina(object):
     if tid == None and startDate ==None and cat == None and graph ==  None:
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
       return dFrameHTML
+
     elif (startDate != None) & (endDate != None):
       slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExp.unPickleData())
       return slicedDFrameHTML
+
     elif cat != None:
       dFrame, dFrameHTML = fl.finaDisp.dispDFrameByCat(cat, fl.finaExp.unPickleData())
       return dFrameHTML
+
     elif graph != None:
-      buf = sio()
       buf = fl.finaDisp.dispPareto(fl.finaExp.unPickleData())
       buf.seek(0)
       cherrypy.response.headers['Content-Type'] = "image/png"
       return cherrypy.lib.file_generator(buf)
+
     else:
       return "Get the trans with id = " + tid
 
