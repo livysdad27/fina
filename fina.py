@@ -6,7 +6,7 @@ class fina(object):
   exposed = True
   @cherrypy.tools.accept(media='text/plain')
   
-  def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None):
+  def GET(self, tid=None, cat=None, graph=None, graphType=None, sortby=None, startDate=None, endDate=None, now=None):
     if tid == None and startDate ==None and cat == None and graph ==  None:
       dFrame, dFrameHTML = fl.finaDisp.dispOFX(fl.finaExp.unPickleData())
       return dFrameHTML

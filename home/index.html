@@ -24,27 +24,21 @@
 
     <div class="row">
 
-      <div class="col-md-6">
-        <form action="/api/trans" class="dropzone" id="ofx-file-dropzone"></form>
-        <br>
-        <br>
+      <div class="col-md-2" style="border-style: dotted">
+        <h1><form action="/api/trans" class="dropzone" id="ofx-file-dropzone"></form></h1>
+      </div>
+      
+      <div class="col-md-10">
+        <h2>Fina - The financial analyzer</h2>
       </div>
 
-      <div class="col-md-6">
-        <input type="text" name="newCat"><br>
+      <div class="col-md-10">
+        <div class="catInput">Enter Category:<input type="text" name="newCat"></div>
         <div class="catArea"></div>
-      </div>
 
-    </div>
-
-    <div class="row">
-
-      <div class="col-md-12">
-        <img src="/api/trans?graph=pareto" width="100%"> 
-        Start Date:<input type='datetime-local' name='startDate'><br>
-        End Date:<input type='datetime-local' name='endDate'><br>
-        <button name="queryButton" value="toejamblamb">Get Transactions</button>
-        <div class="transArea"></div><br>
+        Start Date:<input type='datetime-local' name='startDate'> End Date:<input type='datetime-local' name='endDate'> <button name="queryButton" value="toejamblamb">Update Data</button>
+        <p><img class="graphImage"></p>
+        <div class="transArea"></div>
       </div>
 
     </div>

@@ -30,6 +30,8 @@ def dispDFrameByCat(cat, dFrame):
   '''Display the items with a given category'''
   sliceDFrame = dFrame.loc[dFrame['cat'] == cat]
   sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable table-condensed', columns=('payee', 'amount', 'date'))
+  if len(sliceDFrame.index) == 0:
+    sliceDFrameHTML = ''
   return sliceDFrame, sliceDFrameHTML
 
 def dispDFrameByMonth(yearNum, monthNum, dFrame):

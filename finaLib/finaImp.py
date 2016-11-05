@@ -1,8 +1,6 @@
 #!/usr/bin/python
+import finaExp as fe
 import os, pandas
-import urllib
-from cStringIO import StringIO as sio
-#import ofxparse 
 from ofxparse import OfxParser as ofp 
 from ofxparse.ofxparse import OfxParserException as ofpe
 
@@ -13,19 +11,16 @@ def importOFX(fileName):
       os.makedirs("data")
   except(IOError):
     return "Couldn't create data directory!"
+  currentData = fe.unPickleData()
   try:
     transList = [] 
-#    fileFullName = os.path.join("data", fileName)
-#    buf = sio()
-#    buf.write(fileName.file.read())
-#    buf.seek(0) 
     ofx = ofp.parse(fileName.file)
     for t in ofx.account.statement.transactions:
-      tidLink = '<a href=/api/trans/' + t.id.replace(" ", "%20").replace("#", "%23")  + '>' + t.id + '</a>'
-      transList.append({'id':t.id, 'link':tidLink, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
+      transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
-    df = pandas.DataFrame.from_records(transList, index='id')
+    df = pandas.DataFrame.from_records(transList)
     df.amount = df.amount.astype(float)
+    df = pandas.concat([df, currentData]).drop_duplicates(subset='id', keep='last')
     return df
   except IOError:
     return "File not found!"
