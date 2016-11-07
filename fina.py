@@ -36,7 +36,7 @@ class fina(object):
       return "Update category for a single transition with tid = " + tid
 
   def PUT(self, tFile=None):
-    fl.finaImp.pickleDataFrame(fl.finaImp.importOFX(tFile))
+    fl.finaImp.pickleDataFrame(fl.finaImp.importOFX(tFile.file))
     return "Imported a transaction file"
 
   def DELETE(self, tid=None):

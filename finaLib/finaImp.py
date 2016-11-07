@@ -14,7 +14,7 @@ def importOFX(fileName):
   currentData = fe.unPickleData()
   try:
     transList = [] 
-    ofx = ofp.parse(fileName.file)
+    ofx = ofp.parse(fileName)
     for t in ofx.account.statement.transactions:
       transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
