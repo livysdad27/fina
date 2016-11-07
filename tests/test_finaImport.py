@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from finaLib import finaImport 
+from finaLib import finaImp 
 import unittest, os, pandas, shutil
 
 class testImport(unittest.TestCase):
