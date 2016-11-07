@@ -47,6 +47,7 @@ class fina(object):
 
 class home(object):
   pass
+
 cherrypy.config.update("global.cfg")
 if __name__ == '__main__':
   cherrypy.tree.mount(fina(), "/api/trans", "fina.cfg")
