@@ -23,15 +23,15 @@ class testImport(unittest.TestCase):
 
   def testImportCSV(self):
     '''******Test a good file and make sure importOFX returns a pandas DataFrame object '''
-    self.assertIsInstance(finaImport.importOFX("test.OFX"), pandas.core.frame.DataFrame)
+    self.assertIsInstance(finaImp.importOFX("test.OFX"), pandas.core.frame.DataFrame)
 
   def testImportBadFile(self):
     '''******Test a non-existant file '''
-    self.assertEquals(finaImport.importOFX("testopesto"), "File not found!")
+    self.assertEquals(finaImp.importOFX("testopesto"), "File not found!")
 
   def testImportEmptyFile(self):
     '''******Test an empty file import'''
-    self.assertEquals(finaImport.importOFX("empty.OFX"), "Likely an empty file but an OfxParserException was raised!")
+    self.assertEquals(finaImp.importOFX("empty.OFX"), "Likely an empty file but an OfxParserException was raised!")
 
   def testImportBadFile(self):
     '''******Test an empty file import'''
