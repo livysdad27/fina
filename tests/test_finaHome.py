@@ -20,16 +20,3 @@ class TestIndex(ctc.BaseCherryPyTestCase):
     response = self.request('/index.html')
     self.assertEqual(response.output_status, '200 OK')
 
-class TestFinaJS(ctc.BaseCherryPyTestCase):
-  '''Test class for the main cherry.py dispatcher.'''
-  def test_get(self):
-    '''******Test a get request using'''            
-    response = self.request('/fina.js')
-    self.assertEqual(response.output_status, '200 OK')
-
-class TestDropzoneJS(ctc.BaseCherryPyTestCase):
-  '''Test class for the main cherry.py dispatcher.'''
-  def test_get(self):
-    '''******Test a get request using'''            
-    response = self.request('/dropzone.js')
-    self.assertEqual(response.output_status, '200 OK')
