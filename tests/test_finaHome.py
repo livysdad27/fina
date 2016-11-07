@@ -13,7 +13,7 @@ def tearDownModule():
   cherrypy.engine.exit()
 teardown_module = tearDownModule
 
-class TestIndex(ctc.BaseCherryPyTestCase):
+class TestCherryPyApp(ctc.BaseCherryPyTestCase):
   '''Test class for the main cherry.py dispatcher.'''
   def test_get(self):
     '''******Test a get request using'''            
