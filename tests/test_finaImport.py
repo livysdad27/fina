@@ -23,4 +23,4 @@ class testImport(unittest.TestCase):
 
   def testImportCSV(self):
     '''******Test a good file and make sure importOFX returns a pandas DataFrame object '''
-    self.assertIsInstance(finaImp.importOFX(open("data/test.OFX")), pandas.core.frame.DataFrame)
+    self.assertIsInstance(finaImp.importOFX(open("tests/assets/test.OFX")), pandas.core.frame.DataFrame)
