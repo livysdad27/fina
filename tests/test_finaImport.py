@@ -35,4 +35,4 @@ class testImport(unittest.TestCase):
 
   def testImportBadFile(self):
     '''******Test an empty file import'''
-    self.assertEquals(finaImport.importOFX("bad.OFX"), "Bad OFX File or other ValueError")
+    self.assertEquals(finaImp.importOFX("bad.OFX"), "Bad OFX File or other ValueError")
