@@ -9,7 +9,7 @@ pandas.set_option('display.max_colwidth', -1)
 def dispOFX(dFrame):
   '''importOFX brings in the OFX transaction objects to be analyzed'''
   try:
-    dFrameHTML = dFrame.to_html(escape=False)
+    dFrameHTML = dFrame.to_html(escape=False, classes="table-condensed")
     return dFrame, dFrameHTML
   except(IOError):
     return "File not found!"
@@ -32,12 +32,6 @@ def dispDFrameByCat(cat, dFrame):
   sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable table-condensed', columns=('payee', 'amount', 'date'))
   if len(sliceDFrame.index) == 0:
     sliceDFrameHTML = ''
-  return sliceDFrame, sliceDFrameHTML
-
-def dispDFrameByMonth(yearNum, monthNum, dFrame):
-  '''dispDFrameByMonth slices a month of transactions out of the dataframe'''
-  sliceDFrame = dFrame.loc[(dFrame['date'].month == monthNum) & (dFrame['date'].year == yearNum)]
-  sliceDFrameHTML = sliceDFrame.to_html(classes="table-condensed")
   return sliceDFrame, sliceDFrameHTML
 
 def dispPareto(dFrame):
