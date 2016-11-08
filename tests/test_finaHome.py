@@ -13,10 +13,23 @@ def tearDownModule():
   cherrypy.engine.exit()
 teardown_module = tearDownModule
 
-class TestCherryPyApp(ctc.BaseCherryPyTestCase):
+class TestHomeIndex(ctc.BaseCherryPyTestCase):
   '''Test class for the main cherry.py dispatcher.'''
   def test_get(self):
     '''******Test a get request using'''            
     response = self.request('/index.html')
     self.assertEqual(response.output_status, '200 OK')
 
+class TestHomeFinaJS(ctc.BaseCherryPyTestCase):
+  '''Test class for the main cherry.py dispatcher.'''
+  def test_get(self):
+    '''******Test a get request using'''            
+    response = self.request('/fina.js')
+    self.assertEqual(response.output_status, '200 OK')
+
+class TestHomeDropzoneJS(ctc.BaseCherryPyTestCase):
+  '''Test class for the main cherry.py dispatcher.'''
+  def test_get(self):
+    '''******Test a get request using'''            
+    response = self.request('/dropzone.js')
+    self.assertEqual(response.output_status, '200 OK')
