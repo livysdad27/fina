@@ -1,7 +1,9 @@
 #!/usr/bin/python
-
+import os
 import cherrypy
 import finaLib as fl
+
+currentDir = os.path.dirname(os.path.abspath(__file__))
 
 class fina(object):
   exposed = True
