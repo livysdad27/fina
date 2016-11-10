@@ -33,9 +33,14 @@ function transAreaUpdate(){
   });
 }
 
-function graphUpdate(gType){
+function graphUpdate(gType, sDate, eDate){
   var now = new Date().getTime();
-  $('.graphImage').attr('src', '/api/trans?graph=' + gType + "&now=" + now);
+  if ((typeof(eDate) == 'undefined') || (typeof(sDate) == 'undefined')){
+    $('.graphImage').attr('src', '/api/trans?graph=' + gType + "&now=" + now);
+  }
+  else{
+    $('.graphImage').attr('src', '/api/trans?graph=' + encodeURI( gType + '&startDate=' + sDate + '&endDate=' + eDate + "&now=" + now));
+  }
 }
 
 function updateAll(){
@@ -71,6 +76,7 @@ $(document).ready(function(){
                  },
       'success' : function(data){
           $('.transArea').html(data);
+          graphUpdate('pareto', $('input[name=startDate]').val(), $('input[name=endDate]').val());
       }  
     });
   });

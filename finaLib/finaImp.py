@@ -14,7 +14,7 @@ def importOFX(fileName):
   for t in ofx.account.statement.transactions:
     transList.append({'id':t.id, 'amount':t.amount, 'checknum':t.checknum, 'date':t.date, 'mcc':t.mcc, 'memo':t.memo, 'payee':t.payee, 'sic':t.sic, 'type':t.type, 'cat':''})
 
-  df = pandas.DataFrame.from_records(transList)
+  df = pandas.DataFrame.from_records(transList, columns=['id', 'date', 'payee','cat', 'amount', 'type', 'memo', 'checknum', 'sic'])
   df.amount = df.amount.astype(float)
   df = pandas.concat([df, currentData]).drop_duplicates(subset='id', keep='last')
   return df
