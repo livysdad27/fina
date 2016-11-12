@@ -9,7 +9,7 @@ pandas.set_option('display.max_colwidth', -1)
 def dispOFX(dFrame):
   '''importOFX brings in the OFX transaction objects to be analyzed'''
   try:
-    dFrameHTML = dFrame.to_html(escape=False, classes="table-condensed")
+    dFrameHTML = dFrame.to_html(escape=False, classes="transTable table-condensed")
     return dFrame, dFrameHTML
   except(IOError):
     return "File not found!"
@@ -19,11 +19,11 @@ def dispDFrameByDate(startDate, endDate, dFrame):
   sDate = pandas.to_datetime(startDate)
   eDate = pandas.to_datetime(endDate)
   if (pandas.isnull(sDate) or pandas.isnull(eDate)):
-    dFrameHTML = dFrame.to_html(escape=False, classes="table-condensed")
+    dFrameHTML = dFrame.to_html(escape=False, classes="transTable table-condensed")
     return dFrame, dFrameHTML  
   else:
     sliceDFrame = dFrame.loc[(dFrame['date'] > sDate) & (dFrame['date'] < eDate)]
-    sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes="table")
+    sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes="transTable table-condensed")
     return sliceDFrame, sliceDFrameHTML
 
 def dispDFrameByCat(cat, dFrame):

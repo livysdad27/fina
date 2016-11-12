@@ -1,4 +1,3 @@
-
 function tableCellGet(myClass, x, y){
   var jqstr = myClass + ' tbody tr:nth-child(' + y + ') td:nth-child(' + x + ')';
   return $(jqstr).html()
@@ -7,6 +6,22 @@ function tableCellGet(myClass, x, y){
 function tableCellSet(myClass, x, y, myVal){
   var jqstr = myClass + ' tbody tr:nth-child(' + y + ') td:nth-child(' + x + ')';
   $(jqstr).html(myVal);
+}
+
+function makeTid(myClass){
+  for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
+    var id = tableCellGet(myClass, 2, i);
+    var tid = "<a href='api/trans?tid=" + encodeURIComponent(id) + "'>" + id + "</a>";
+    tableCellSet(myClass, 2, i, tid);
+  };
+}
+
+function makeCatLink(myClass){
+  for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
+    var cat = tableCellGet(myClass, 5, i);
+    var tid = "<a href='api/trans?cat=" + encodeURIComponent(cat) + "'>" + cat + "</a>";
+    tableCellSet(myClass, 5, i, tid);
+  };
 }
 
 function catAreaUpdate(){
@@ -23,12 +38,16 @@ function catAreaUpdate(){
   });
 }
 
+var transLength = 0
 function transAreaUpdate(){
   $.ajax({
     'url' : 'api/trans',
     'type'  :  'GET',
     'success' : function(data){
         $('.transArea').html(data);
+        makeTid(".transTable");
+        makeCatLink(".transTable");
+     
     }  
   });
 }
