@@ -11,7 +11,7 @@ function tableCellSet(myClass, x, y, myVal){
 function makeTid(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
     var id = tableCellGet(myClass, 2, i);
-    var tid = "<a href='api/trans?tid=" + encodeURIComponent(id) + "'>" + id + "</a>";
+    var tid = "<a href='trans.html?tid=" + encodeURIComponent(id) + "'>" + id + "</a>";
     tableCellSet(myClass, 2, i, tid);
   };
 }
@@ -19,7 +19,7 @@ function makeTid(myClass){
 function makeCatLink(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
     var cat = tableCellGet(myClass, 5, i);
-    var tid = "<a href='api/trans?cat=" + encodeURIComponent(cat) + "'>" + cat + "</a>";
+    var tid = "<a href='cat.html?cat=" + encodeURIComponent(cat) + "'>" + cat + "</a>";
     tableCellSet(myClass, 5, i, tid);
   };
 }

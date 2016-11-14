@@ -32,7 +32,7 @@ class fina(object):
       cherrypy.response.headers['Content-Type'] = "image/png"
       return cherrypy.lib.file_generator(buf)
 
-    else:
+    elif tid != None:
       return "Get the trans with id = " + tid
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
