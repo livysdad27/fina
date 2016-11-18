@@ -109,6 +109,7 @@ $(document).ready(function(){
       'success' : function(data){
           $('.transArea').html(data);
           graphUpdate('pareto', $('input[name=startDate]').val(), $('input[name=endDate]').val());
+          makeCatLink('.transTable');
       }  
     });
   });
