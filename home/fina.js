@@ -8,27 +8,27 @@ function tableCellSet(myClass, x, y, myVal){
   $(jqstr).html(myVal);
 }
 
-function makeTid(myClass){
+/*function makeTid(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
     var id = tableCellGet(myClass, 2, i);
     var tid = "<a href='api/trans?tid=" + encodeURIComponent(id) + "'>" + id + "</a>";
     tableCellSet(myClass, 2, i, tid);
   };
-}
+}*/
 
 function makeCatLink(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
     var cat = tableCellGet(myClass, 5, i);
-    var tid = "<a href='api/trans?cat=" + encodeURIComponent(cat) + "'>" + cat + "</a>";
-    tableCellSet(myClass, 5, i, tid);
+    var newCat = "<button class='catButton' value=" + cat + ">" + cat + "</button>";
+    tableCellSet(myClass, 5, i, newCat);
   };
 }
 
-function catAreaUpdate(){
+function catAreaUpdate(newCat){
   $.ajax({
     'url' : 'api/trans',
     'type' : 'GET',
-    'data' : { cat: ''},
+    'data' : { cat: newCat},
     'success' : function(data){
       if(data == ''){
         $('.catInput').hide();
@@ -38,18 +38,30 @@ function catAreaUpdate(){
   });
 }
 
-var transLength = 0
-function transAreaUpdate(){
-  $.ajax({
-    'url' : 'api/trans',
-    'type'  :  'GET',
-    'success' : function(data){
-        $('.transArea').html(data);
-        makeTid(".transTable");
-        makeCatLink(".transTable");
-     
-    }  
-  });
+function transAreaUpdate(catName){
+  if (catName == undefined){ 
+    $.ajax({
+      'url' : 'api/trans',
+      'type'  :  'GET',
+      'success' : function(data){
+          $('.transArea').html(data);
+          //makeTid(".transTable");
+          makeCatLink(".transTable");
+      }  
+    });
+  }
+  else {
+    $.ajax({
+      'url' : 'api/trans',
+      'type'  :  'GET',
+      'data' : { cat: catName},
+      'success' : function(data){
+          $('.transArea').html(data);
+          //makeTid(".transTable");
+          makeCatLink(".transTable");
+      }  
+    });
+  }
 }
 
 function graphUpdate(gType, sDate, eDate){
@@ -63,7 +75,7 @@ function graphUpdate(gType, sDate, eDate){
 }
 
 function updateAll(){
-  catAreaUpdate();
+  catAreaUpdate('');
   transAreaUpdate();
   graphUpdate('pareto');
 }
@@ -73,6 +85,7 @@ $(document).ready(function(){
 
   Dropzone.options.ofxFileDropzone = {
     paramName:  "tFile",
+    dictDefaultMessage: "Drop OFX file, or click here to upload ", 
     maxFilesize:  2,
     method:  "put",
     accept:  function(file, done) {
@@ -107,7 +120,7 @@ $(document).ready(function(){
         'type' : 'POST',
         'data' : {
                    cat:  $('input[name=newCat]').val(),
-                   payee: tableCellGet('.payeeTable', 2, 1)
+                   payee: tableCellGet('.payeeTable', 4, 1)
                  },
         'success' : function(data){
           updateAll();
@@ -116,4 +129,9 @@ $(document).ready(function(){
       $('input[name=newCat]').val('');
     }
   });
+  
+  $(document).on('click', '.catButton', function(){
+    transAreaUpdate(this.value);
+  });
+
 });

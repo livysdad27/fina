@@ -33,7 +33,8 @@ class fina(object):
       return cherrypy.lib.file_generator(buf)
 
     elif tid != None:
-      return "Get the trans with id = " + tid
+      trans = fl.finaDisp.dispDFrameById(tid, fl.finaExp.unPickleData())
+      return trans 
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
     if tid == None:

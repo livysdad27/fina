@@ -29,10 +29,21 @@ def dispDFrameByDate(startDate, endDate, dFrame):
 def dispDFrameByCat(cat, dFrame):
   '''Display the items with a given category'''
   sliceDFrame = dFrame.loc[dFrame['cat'] == cat]
-  sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable table-condensed', columns=('payee', 'amount', 'date'))
+  sliceDFrameHTML = sliceDFrame.to_html(escape=False, classes='payeeTable table-condensed')
   if len(sliceDFrame.index) == 0:
     sliceDFrameHTML = ''
   return sliceDFrame, sliceDFrameHTML
+
+def dispDFrameById(tid, dFrame):
+  '''Display the item with a given tid'''
+  df = dFrame.loc[dFrame['id'] == tid]
+  transId = str(df.iloc[0]['id'])
+  transAmount = str(df.iloc[0]['amount'])
+  transPayee = df.iloc[0]['payee']
+  transCat = df.iloc[0]['cat']
+  transDate = str(df.iloc[0]['date'])
+  transDeets = "<b>Payee:</b> " + transPayee + "<br> <b>Date:</b> " + transDate + "<br> <b>Amount:</b> " + transAmount + "<br> <b>Cat:</b> " + transCat
+  return transDeets 
 
 def dispPareto(dFrame):
   dFrame.amount = dFrame.amount.astype('float')

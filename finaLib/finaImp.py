@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import finaExp as fe
-import os, pandas
+import os, pandas, urllib
 from ofxparse import OfxParser as ofp 
 from ofxparse.ofxparse import OfxParserException as ofpe
 
