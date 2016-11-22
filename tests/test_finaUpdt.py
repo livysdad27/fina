@@ -18,5 +18,5 @@ class testImport(unittest.TestCase):
     '''******Test that we can update a cat'''
     df = finaExp.unPickleData("test.pkl", "tests/assets")
     odf, ostr = finaDisp.dispOFX(df)
-    self.assertTrue(finaUpdt.updateCat('toe', 'jamb', odf, "tests/assets", "test.pkl"))
+    self.assertTrue(finaUpdt.updateCat('toe', 'jamb', None,  odf, "tests/assets", "test.pkl"))
 
