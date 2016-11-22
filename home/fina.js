@@ -76,10 +76,10 @@ function transAreaUpdate(catName){
   }
 }
 
-function graphUpdate(gType, sDate, eDate){
+function graphUpdate(gType, cat, sDate, eDate){
   var now = new Date().getTime();
   if ((typeof(eDate) == 'undefined') || (typeof(sDate) == 'undefined')){
-    $('.graphImage').attr('src', '/api/trans?graph=' + gType + "&now=" + now);
+    $('.graphImage').attr('src', '/api/trans?graph=' + gType + "&cat=" + cat + "&now=" + now);
   }
   else{
     $('.graphImage').attr('src', '/api/trans?graph=' + encodeURI( gType + '&startDate=' + sDate + '&endDate=' + eDate + "&now=" + now));
@@ -167,6 +167,7 @@ $(document).ready(function(){
 
   $(document).on('click', '.catButton', function(){
     transAreaUpdate(this.value);
+    graphUpdate('monthPareto', this.value);
   });
 
   $(document).on('click', '.tidButton', function(){

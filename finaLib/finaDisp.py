@@ -53,3 +53,13 @@ def dispPareto(dFrame):
   buf = sio()
   fig.savefig(buf, format='png')
   return buf 
+
+def dispMonthPareto(dFrame, cat):
+  dFrame.amount = dFrame.amount.astype('float')
+  dFrame = dFrame.loc[dFrame['cat']==cat]
+  dFrame = dFrame.groupby([ dFrame['date'].dt.month, dFrame['date'].dt.year ]).sum().sort_values('amount')
+  plot = dFrame.plot.bar()
+  fig = plot.get_figure()
+  buf = sio()
+  fig.savefig(buf, format='png')
+  return buf 

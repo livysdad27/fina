@@ -39,3 +39,9 @@ class testImport(unittest.TestCase):
     df = finaExp.unPickleData("test.pkl", "tests/assets")
     buf = finaDisp.dispPareto(df)
     self.assertIsInstance(buf, cStringIO.OutputType)
+
+  def testDispMonthPareto(self):
+    '''******Test that we can spit out a buffered chart for a month pareto'''
+    df = finaExp.unPickleData("test.pkl", "tests/assets")
+    buf = finaDisp.dispMonthPareto(df, '')
+    self.assertIsInstance(buf, cStringIO.OutputType)

@@ -18,7 +18,7 @@ class fina(object):
       slicedDFrame, slicedDFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExp.unPickleData())
       return slicedDFrameHTML
 
-    elif cat != None:
+    elif cat != None and graph == None:
       dFrame, dFrameHTML = fl.finaDisp.dispDFrameByCat(cat, fl.finaExp.unPickleData())
       return dFrameHTML
 
@@ -26,8 +26,10 @@ class fina(object):
       if (startDate != None) & (endDate != None):
         dFrame, dFrameHTML = fl.finaDisp.dispDFrameByDate(startDate, endDate, fl.finaExp.unPickleData()) 
         buf = fl.finaDisp.dispPareto(dFrame)
-      else:
+      elif graph == 'pareto':
         buf = fl.finaDisp.dispPareto(fl.finaExp.unPickleData())
+      elif graph == 'monthPareto':
+        buf = fl.finaDisp.dispMonthPareto(fl.finaExp.unPickleData(), cat)
       buf.seek(0)
       cherrypy.response.headers['Content-Type'] = "image/png"
       return cherrypy.lib.file_generator(buf)
