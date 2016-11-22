@@ -38,9 +38,10 @@ class fina(object):
 
   def POST(self, tid=None, payee=None, cat=None, startDate=None, endDate=None):
     if tid == None:
-      fl.finaUpdt.updateCat(payee, cat, fl.finaExp.unPickleData())  
+      fl.finaUpdt.updateCat(payee, cat, None, fl.finaExp.unPickleData())  
       return "Category " + cat + " set for payee " + payee
     else:
+      fl.finaUpdt.updateCat(None, cat, tid, fl.finaExp.unPickleData())
       return "Update category for a single transition with tid = " + tid
 
   def PUT(self, tFile=None):

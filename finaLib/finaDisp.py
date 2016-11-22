@@ -1,7 +1,6 @@
 #!/usr/bin/python
-import os, pandas
+import os, pandas, matplotlib, urllib
 from cStringIO import StringIO as sio
-import matplotlib
 
 matplotlib.use('Agg')
 pandas.set_option('display.max_colwidth', -1)
@@ -36,13 +35,14 @@ def dispDFrameByCat(cat, dFrame):
 
 def dispDFrameById(tid, dFrame):
   '''Display the item with a given tid'''
+  tid = urllib.unquote(tid).decode()
   df = dFrame.loc[dFrame['id'] == tid]
   transId = str(df.iloc[0]['id'])
   transAmount = str(df.iloc[0]['amount'])
   transPayee = df.iloc[0]['payee']
   transCat = df.iloc[0]['cat']
   transDate = str(df.iloc[0]['date'])
-  transDeets = "<b>Payee:</b> " + transPayee + "<br> <b>Date:</b> " + transDate + "<br> <b>Amount:</b> " + transAmount + "<br> <b>Cat:</b> " + transCat
+  transDeets = "<b>Payee:</b> " + transPayee + "<br> <b>Date:</b> " + transDate + "<br> <b>Amount:</b> " + transAmount + "<br> <b>Cat:</b> " + transCat + "<input type='hidden' class='overrideTid' name='tid' value='" + transId + "'></input>"
   return transDeets 
 
 def dispPareto(dFrame):

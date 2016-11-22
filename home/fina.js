@@ -8,13 +8,13 @@ function tableCellSet(myClass, x, y, myVal){
   $(jqstr).html(myVal);
 }
 
-/*function makeTid(myClass){
+function makeTid(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
     var id = tableCellGet(myClass, 2, i);
-    var tid = "<a href='api/trans?tid=" + encodeURIComponent(id) + "'>" + id + "</a>";
+    var tid = "<button class='tidButton' value=" + encodeURIComponent(id) + ">" + id + "</button>";
     tableCellSet(myClass, 2, i, tid);
   };
-}*/
+}
 
 function makeCatLink(myClass){
   for(i = 1; i <= $(myClass + ' tbody tr').length; i++){
@@ -38,6 +38,18 @@ function catAreaUpdate(newCat){
   });
 }
 
+function transDetailUpdate(thisTid){
+  $.ajax({
+    'url' : 'api/trans',
+    'type' : 'GET',
+    'data' : { tid: thisTid},
+    'success' : function(data){
+      $('.transDetail').html(data);
+      $('.catOverride').show();
+    }
+  });
+}
+
 function transAreaUpdate(catName){
   if (catName == undefined){ 
     $.ajax({
@@ -45,7 +57,7 @@ function transAreaUpdate(catName){
       'type'  :  'GET',
       'success' : function(data){
           $('.transArea').html(data);
-          //makeTid(".transTable");
+          makeTid(".transTable");
           makeCatLink(".transTable");
       }  
     });
@@ -57,7 +69,7 @@ function transAreaUpdate(catName){
       'data' : { cat: catName},
       'success' : function(data){
           $('.transArea').html(data);
-          //makeTid(".transTable");
+          makeTid(".transTable");
           makeCatLink(".transTable");
       }  
     });
@@ -82,6 +94,7 @@ function updateAll(){
   
 
 $(document).ready(function(){
+  $('.catOverride').hide();
 
   Dropzone.options.ofxFileDropzone = {
     paramName:  "tFile",
@@ -109,6 +122,7 @@ $(document).ready(function(){
       'success' : function(data){
           $('.transArea').html(data);
           graphUpdate('pareto', $('input[name=startDate]').val(), $('input[name=endDate]').val());
+          makeTid('.transTable');
           makeCatLink('.transTable');
       }  
     });
@@ -131,8 +145,32 @@ $(document).ready(function(){
     }
   });
   
+  $('input[name=overrideCat]').keypress(function(e) {
+    if(e.which == 13){
+      $.ajax({
+        'url' : 'api/trans',
+        'type' : 'POST',
+        'data' : {
+                   cat:  $('input[name=overrideCat]').val(),
+                   tid: encodeURIComponent($('.overrideTid').val()),
+                 },
+        'success' : function(data){
+          updateAll();
+        }
+      });
+      $('input[name=overrideCat]').val('');
+      $('.overrideTid').val('');
+      $('.catOverride').hide();
+      $('.transDetail').html('');
+    }
+  });
+
   $(document).on('click', '.catButton', function(){
     transAreaUpdate(this.value);
+  });
+
+  $(document).on('click', '.tidButton', function(){
+    transDetailUpdate(this.value);
   });
 
 });

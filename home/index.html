@@ -7,7 +7,7 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="dropzone.js"></script>
-    <script type="text/javascript" src="fina.js?v=5"></script>
+    <script type="text/javascript" src="fina.js?v=6"></script>
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -27,7 +27,6 @@
       <div class="col-md-2" style="border-style: dotted">
         <h2><form action="/api/trans" class="dropzone" id="ofx-file-dropzone"></form></h2>
       </div>
-      <div class="transDetail"></div>
       
       <div class="col-md-10">
         <h2>Fina - The financial analyzer</h2>
@@ -35,6 +34,13 @@
         <div class="catInput">Enter Category:<input type="text" name="newCat"></div>
         <div class="catArea"></div>
         <p><img class="graphImage"></p>
+
+    </div>
+    <div class="col-md-2">
+        <div class="transDetail"></div>
+        <div class="catOverride"><br><b>Override:</b><input type="text" name="overrideCat"></div>
+    </div>
+    <div class="col-md-10">
 
         Start Date:<input type='datetime-local' name='startDate'> End Date:<input type='datetime-local' name='endDate'> <button name="queryButton" value="toejamblamb">Update Data</button>
         <div class="transArea"></div>
