@@ -1,9 +1,11 @@
 #!/usr/bin/python
 import os, pandas, matplotlib, urllib
 from cStringIO import StringIO as sio
+from matplotlib import rcParams
 
 matplotlib.use('Agg')
 pandas.set_option('display.max_colwidth', -1)
+rcParams.update({'figure.autolayout': True})
 
 def dispOFX(dFrame):
   '''importOFX brings in the OFX transaction objects to be analyzed'''
@@ -48,7 +50,7 @@ def dispDFrameById(tid, dFrame):
 def dispPareto(dFrame):
   dFrame.amount = dFrame.amount.astype('float')
   dFrame = dFrame.groupby('cat').sum().sort_values('amount')
-  plot = dFrame.plot.bar()
+  plot = dFrame.plot.bar(color='grey')
   fig = plot.get_figure()
   buf = sio()
   fig.savefig(buf, format='png')
@@ -58,7 +60,7 @@ def dispMonthPareto(dFrame, cat):
   dFrame.amount = dFrame.amount.astype('float')
   dFrame = dFrame.loc[dFrame['cat']==cat]
   dFrame = dFrame.groupby([ dFrame['date'].dt.month, dFrame['date'].dt.year ]).sum().sort_values('amount')
-  plot = dFrame.plot.bar()
+  plot = dFrame.plot.bar(color='grey')
   fig = plot.get_figure()
   buf = sio()
   fig.savefig(buf, format='png')
