@@ -1,4 +1,4 @@
-PyInstaller==3.0
+PyInstaller==3.6
 BeautifulSoup
 six
 cherrypy
